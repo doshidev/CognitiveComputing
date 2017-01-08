@@ -1,3 +1,5 @@
+import oracle.jrockit.jfr.events.*;
+
 import java.util.*;
 import java.io.*;
 
@@ -7,7 +9,7 @@ import java.io.*;
 public class IndexBooks {
     public static void main(String[] args) throws IOException{
 
-        Map<String, ArrayList<Integer>> words = new HashMap<>();
+        Map<String, BitSet> words = new HashMap<>();
         int bookid = 0, count = 0;
 
         File folder = new File("books");
@@ -25,7 +27,7 @@ public class IndexBooks {
 
                 System.out.println("File: " + file);
                 //Read and print each line
-                int token = 0, len = 0;
+                int token = 0, len;
                 while(token != -1){
                     String key;
                     token = st.nextToken();
@@ -39,11 +41,9 @@ public class IndexBooks {
                             key = st.sval;
                         }
                         if (!words.containsKey(key)) {
-                            words.put(key, new ArrayList<Integer>());
-                            words.get(key).add(bookid);
-                        } else if(!words.get(key).contains(bookid)) {
-                            words.get(key).add(bookid);
+                            words.put(key, new BitSet());
                         }
+                        words.get(key).set(bookid, true);
                     }
                 }
 
@@ -66,5 +66,7 @@ public class IndexBooks {
         System.out.println(count + " total words");
         System.out.println(words.size() + " unique words");
         System.out.println(words.get("Achilles"));
+        System.out.println(words.get("Helen"));
+        
     }
 }
