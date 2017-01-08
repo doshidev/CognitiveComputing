@@ -32,6 +32,5 @@ public class SearchIliad {
         bs1.and(bs2);
         
         System.out.println(bs1);
-        // System.out.println(bs2);
     }
 }
